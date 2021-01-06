@@ -1,3 +1,7 @@
+arch:
+  - amd64
+  - ppc64le
+
 language: node_js
 node_js:
   - 10
@@ -33,6 +37,25 @@ matrix:
             - librsvg2-dev
       script: "yarn add canvas && yarn test --retries 1"
     - node_js: stable
+      env: TEST_SUITE=browser
+      addons:
+        chrome: stable
+      script: "yarn test-browser"
+    - node_js: 10
+      arch: ppc64le
+      env: TEST_SUITE=node-canvas
+      addons:
+        apt:
+          packages:
+            - build-essential
+            - libcairo2-dev
+            - libpango1.0-dev
+            - libjpeg-dev
+            - libgif-dev
+            - librsvg2-dev
+      script: "yarn add canvas && yarn test --retries 1"
+    - node_js: stable
+      arch: ppc64le
       env: TEST_SUITE=browser
       addons:
         chrome: stable
